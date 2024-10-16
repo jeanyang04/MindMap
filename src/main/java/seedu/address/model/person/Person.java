@@ -25,20 +25,18 @@ public class Person {
     private final Address address;
     private final LogsList logsList;
     private final Set<Tag> tags = new HashSet<>();
-    private final IdentityNumber identityNumber;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, IdentityNumber identityNumber) {
-        requireAllNonNull(name, phone, email, address, tags, identityNumber);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.logsList = new LogsList();
-        this.identityNumber = identityNumber;
     }
 
     public Name getName() {
@@ -59,10 +57,6 @@ public class Person {
 
     public LogsList getLogsList() {
         return logsList;
-    }
-
-    public IdentityNumber getIdentityNumber() {
-        return identityNumber;
     }
 
     public void addLogEntry(String entry) {
@@ -110,20 +104,18 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && logsList.equals(otherPerson.logsList)
-                && identityNumber.equals(otherPerson.identityNumber);
+                && logsList.equals(otherPerson.logsList);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, logsList, identityNumber);
+        return Objects.hash(name, phone, email, address, tags, logsList);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("id", identityNumber)
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
