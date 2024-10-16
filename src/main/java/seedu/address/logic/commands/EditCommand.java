@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -23,6 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.IdentityNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -100,8 +103,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        IdentityNumber updatedId = editPersonDescriptor.getId().orElse(personToEdit.getIdentityNumber());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedId);
     }
 
     @Override
@@ -139,6 +143,8 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
 
+        private IdentityNumber id;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -151,6 +157,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setId(toCopy.id);
         }
 
         /**
@@ -166,6 +173,14 @@ public class EditCommand extends Command {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setId(IdentityNumber id) {
+            this.id = id;
+        }
+
+        public Optional<IdentityNumber> getId() {
+            return Optional.ofNullable(id);
         }
 
         public void setPhone(Phone phone) {

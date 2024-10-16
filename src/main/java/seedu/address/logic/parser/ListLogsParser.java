@@ -16,7 +16,7 @@ public class ListLogsParser implements Parser<ListLogsCommand> {
      */
     public ListLogsCommand parse(String args) throws ParseException {
         try {
-            String id = ParserUtil.parseId(args);
+            String id = ParserUtil.parseId(args).toString();
             return new ListLogsCommand(id);
         } catch (ParseException pe) {
             throw new ParseException(
